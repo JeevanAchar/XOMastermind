@@ -1,98 +1,141 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Header } from "@components/header";
+import { ScreenWrapper } from "@components/screen-wrapper";
+import { Badge } from "@components/ui/badge";
+import { Button } from "@components/ui/button";
+import { Card } from "@components/ui/card";
+import { useState } from "react";
+import { Alert, Text, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
+interface StackItem {
+  name: string;
+  version: string;
+  variant: "purple" | "info" | "success" | "warning" | "default";
 }
+
+const TECH_STACK: StackItem[] = [
+  { name: "Expo SDK", version: "v57", variant: "purple" },
+  { name: "React Native", version: "0.86", variant: "info" },
+  { name: "React", version: "19.2", variant: "info" },
+  { name: "NativeWind", version: "v4", variant: "success" },
+  { name: "Tailwind CSS", version: "v3.4", variant: "success" },
+  { name: "Expo Router", version: "v57", variant: "purple" },
+  { name: "TypeScript", version: "v6", variant: "info" },
+  { name: "Jest + RNTL", version: "Unit/Integ", variant: "warning" },
+  { name: "ESLint 9 Flat", version: "Expo Config", variant: "default" },
+  { name: "Prettier", version: "Tailwind Plugin", variant: "default" },
+];
 
 export default function HomeScreen() {
+  const [clickCount, setClickCount] = useState(0);
+
+  const handleAction = () => {
+    setClickCount((prev) => prev + 1);
+    Alert.alert(
+      "Boilerplate Active",
+      `Component interaction verified! Click count: ${clickCount + 1}`,
+    );
+  };
+
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <ScreenWrapper scrollable>
+      <Header
+        title="React Native 2026"
+        subtitle="Modern, opinionated Expo & React Native starter template"
+        badgeText="SDK 57"
+      />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      {/* Hero Welcome Card */}
+      <Card
+        title="React-Native-Boiler-Plate-2026"
+        subtitle="Production-ready architecture with clean alias imports"
+        className="mb-5 bg-gradient-to-br from-slate-900 to-slate-800"
+      >
+        <Text className="mb-4 text-sm leading-relaxed text-slate-300">
+          Pre-configured with Tailwind CSS / NativeWind styling, Expo Router file-based navigation,
+          ESLint 9, Prettier with Tailwind sorting, Jest testing, and path aliases.
+        </Text>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
+        <View className="mb-4 flex-row flex-wrap gap-2">
+          {TECH_STACK.map((item) => (
+            <Badge key={item.name} label={`${item.name} ${item.version}`} variant={item.variant} />
+          ))}
+        </View>
+
+        <View className="flex-row gap-3 pt-2">
+          <Button
+            label={`Test Interaction (${clickCount})`}
+            variant="primary"
+            className="flex-1"
+            onPress={handleAction}
           />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        </View>
+      </Card>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      {/* Path Aliases Showcase */}
+      <Card
+        title="Configured Path Aliases"
+        subtitle="Clean imports throughout the project without relative paths"
+        className="mb-5"
+      >
+        <View className="gap-2.5">
+          <View className="rounded-xl border border-slate-800 bg-slate-900/90 p-3">
+            <Text className="font-mono text-xs font-semibold text-indigo-400">@components/*</Text>
+            <Text className="mt-0.5 text-xs text-slate-400">Reusable UI and layout components</Text>
+          </View>
+
+          <View className="rounded-xl border border-slate-800 bg-slate-900/90 p-3">
+            <Text className="font-mono text-xs font-semibold text-sky-400">@utils/*</Text>
+            <Text className="mt-0.5 text-xs text-slate-400">
+              Helpers, business logic, and utilities
+            </Text>
+          </View>
+
+          <View className="rounded-xl border border-slate-800 bg-slate-900/90 p-3">
+            <Text className="font-mono text-xs font-semibold text-emerald-400">
+              @hooks/* & @types/*
+            </Text>
+            <Text className="mt-0.5 text-xs text-slate-400">
+              Custom React hooks and TypeScript types
+            </Text>
+          </View>
+
+          <View className="rounded-xl border border-slate-800 bg-slate-900/90 p-3">
+            <Text className="font-mono text-xs font-semibold text-amber-400">@/*</Text>
+            <Text className="mt-0.5 text-xs text-slate-400">
+              Root source directory (e.g. @/global.css)
+            </Text>
+          </View>
+        </View>
+      </Card>
+
+      {/* Quick Commands Card */}
+      <Card title="Useful Scripts" subtitle="Run directly from your terminal" className="mb-5">
+        <View className="gap-2 rounded-xl border border-slate-800/80 bg-slate-950 p-4">
+          <View className="flex-row items-center justify-between">
+            <Text className="font-mono text-xs text-slate-300">npm start</Text>
+            <Text className="text-xs text-slate-500">Start Expo dev server</Text>
+          </View>
+          <View className="flex-row items-center justify-between">
+            <Text className="font-mono text-xs text-slate-300">npm run lint</Text>
+            <Text className="text-xs text-slate-500">Run ESLint 9 checks</Text>
+          </View>
+          <View className="flex-row items-center justify-between">
+            <Text className="font-mono text-xs text-slate-300">npm run format</Text>
+            <Text className="text-xs text-slate-500">Prettier format code</Text>
+          </View>
+          <View className="flex-row items-center justify-between">
+            <Text className="font-mono text-xs text-slate-300">npm run test:coverage</Text>
+            <Text className="text-xs text-slate-500">Jest coverage report</Text>
+          </View>
+        </View>
+      </Card>
+
+      {/* Footer info */}
+      <View className="items-center justify-center py-4">
+        <Text className="text-xs font-medium text-slate-600">
+          Ready for development • Edit src/app/index.tsx
+        </Text>
+      </View>
+    </ScreenWrapper>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "XOMastermind",
-    "slug": "XOMastermind",
+    "name": "React-Native-Boiler-Plate-2026",
+    "slug": "react-native-boilerplate-2026",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "xomastermind",
+    "scheme": "reactnativeboilerplate2026",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"

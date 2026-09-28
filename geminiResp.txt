@@ -147,3 +147,34 @@ Response: Resolved all 23 problems (errors and warnings) reported by `npm run li
 Query: Why you have added query and response in the agents.md instead of geminiResp
 
 Response: Apologized for the mistake. An earlier turn had inadvertently appended historical logs to AGENTS.md, which subsequent responses followed. The query and response was already present in geminiResp.txt. Cleaned up AGENTS.md so that it strictly contains the 10 Project Rules & Guidelines, and ensured going forward that all conversation logs are appended exclusively to geminiResp.txt.
+
+=======================================
+
+Query: & 'c:\Users\Jeevan Achar\Pictures\Screenshots\Screenshot 2026-09-28 115300.png'  Select Game UI screenshot
+
+Update the UI
+
+Response: Updated the Select Games screen and implemented `SelectGameHeader` to precisely match the screenshot:
+- Added text constants `SELECT_GAME: "Select Game"` and `PICK_SCRAP_PAPER: "Pick a scrap paper to start doodling!"` in `src/constants/texts.ts`.
+- Added design system tokens `underlineRed: "#B6171E"` and `subtitleText: "#334155"` in `src/constants/theme.ts`.
+- Created type interface `SelectGameHeaderProps` in `src/c-types/SelectGameHeaderProps.ts`.
+- Built reusable `SelectGameHeader` component at `src/components/SelectGameHeader.tsx` featuring the navy bold serif "Select Game" heading, double-stroke wavy hand-drawn marker underline, and "Pick a scrap paper to start doodling!" subtitle.
+- Updated `NotepadBackground` to utilize theme tokens (`COLORS.paper`, `COLORS.gridLine`, `COLORS.marginLine`) and support configurable margin guide lines.
+- Updated `SelectGamesScreen.tsx` to wrap content within `NotepadBackground` aligned to the red margin line.
+
+=======================================
+
+Query: & 'c:\Users\Jeevan Achar\Pictures\Screenshots\Screenshot 2026-09-28 120721.png' Record component UI screenshort 
+
+RecordComponent lets update the recordcomponent UI matching the UI of the Screenshort
+
+Response: Redesigned `RecordComponent` at `src/components/RecordComponent.tsx` to match the screenshot UI:
+- Added translucent frosted Scotch/masking tape centered across the top edge of the sticky note.
+- Styled the sticky note with a soft yellow background (`COLORS.stickyYellow`), subtle rotation tilt, drop shadow, and amber border (`COLORS.stickyBorder`).
+- Created header row featuring the `Pencil` icon, "PENCIL RECORD", and "Sheet #3" in dark bronze serif typography.
+- Added dashed horizontal separator line separating the header from the cards.
+- Built two inner ivory stats cards (`COLORS.cardIvory` with `COLORS.cardBorder`):
+  1. Win Streak card displaying the bold streak count alongside a fiery `Flame` icon.
+  2. Games Played card displaying total games count alongside a hand-drawn 5-tally pencil stroke doodle.
+- Extended `RecordInfo` in `src/c-types/RecordInfo.ts` and added constants `PENCIL_RECORD`, `WIN_STREAK`, `GAMES_PLAYED`, and `DEFAULT_SHEET` in `src/constants/texts.ts`.
+- Updated `SelectGamesScreen.tsx` to provide data matching the screenshot.

@@ -9,7 +9,7 @@ export interface HeaderProps {
   className?: string;
 }
 
-export default function Header({ title, badgeText, className, subtitle }: Readonly<HeaderProps>) {
+export function Header({ title, badgeText, className, subtitle }: Readonly<HeaderProps>) {
   return (
     <View className={`mb-6 w-full ${className}`} style={{ backgroundColor: COLORS.canvas }}>
       <View className="mb-1 flex-row items-center justify-between">
@@ -20,3 +20,5 @@ export default function Header({ title, badgeText, className, subtitle }: Readon
     </View>
   );
 }
+
+export default Header;

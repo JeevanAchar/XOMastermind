@@ -16,9 +16,17 @@ export const COLORS = {
   mascotBlue: "#0284c7",
   mascotTitle: "#1a4480",
   underlineHighlight: "#f59e0b",
+  underlineRed: "#B6171E",
   tagBackground: "#fef08a",
   tagBorder: "#854d0e",
   footerText: "#94a3b8",
+  subtitleText: "#334155",
+  stickyYellow: "#FFF9C4",
+  stickyBorder: "#E5D895",
+  cardIvory: "#FFFEF5",
+  cardBorder: "#EBDFA8",
+  recordTitle: "#594445",
+  tallyColor: "#475569",
 };
 
 export const SPACING = {

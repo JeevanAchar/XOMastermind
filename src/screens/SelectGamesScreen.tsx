@@ -1,23 +1,30 @@
-import { IconButton } from "@/components/IconButton";
 import type { ActiveGame } from "@c-types/ActiveGame";
 import type { ComingSoonCardProps } from "@c-types/ComingSoonCard";
 import { ActiveGameCard } from "@components/ActiveGameCard";
 import { ComingSoonCard } from "@components/ComingSoonCard";
 import { Footer } from "@components/Footer";
+import { IconButton } from "@components/IconButton";
+import { NotepadBackground } from "@components/NotepadBackground";
 import { RecordComponent } from "@components/RecordComponent";
+import { SelectGameHeader } from "@components/SelectGameHeader";
+import { TEXT } from "@constants/texts";
+import { COLORS } from "@constants/theme";
 import React, { useState } from "react";
 import { FlatList, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 /**
  * SelectGamesScreen – aggregates all UI pieces for the "Select Games" view.
  *
- * Layout (top‑to‑bottom):
- *   1. Header with XP score and music toggle.
- *   2. Main title "Select Games" and a sub‑header.
- *   3. RecordComponent (shows win streak & total games).
- *   4. List of active games (ActiveGameCard).
- *   5. Section for upcoming / locked games (ComingSoonCard).
- *   6. Footer with navigation buttons.
+ * Styled in the graph notebook theme matching the design system:
+ *   - NotepadBackground with graph paper grid and left red margin guide line.
+ *   - Header with XP score and music toggle button.
+ *   - SelectGameHeader with "Select Game", hand-drawn wavy marker underline,
+ *     and "Pick a scrap paper to start doodling!" notebook note.
+ *   - RecordComponent (shows win streak & total games).
+ *   - List of active games (ActiveGameCard).
+ *   - Upcoming / locked games section (ComingSoonCard).
+ *   - Footer with navigation buttons.
  */
 export const SelectGamesScreen: React.FC = () => {
   const [musicPaused, setMusicPaused] = useState(false);
@@ -61,41 +68,64 @@ export const SelectGamesScreen: React.FC = () => {
   const toggleMusic = () => setMusicPaused(!musicPaused);
 
   return (
-    <View className="flex-1 bg-white">
-      {/* Header */}
-      <View className="mb-4 flex-row items-center justify-between">
-        <Text className="text-base font-semibold text-black">XP: 12345</Text>
-        <IconButton name="mic" onPress={toggleMusic} />
-      </View>
+    <SafeAreaView className="flex-1" style={{ backgroundColor: COLORS.canvas }}>
+      <NotepadBackground className="flex-1">
+        <View className="flex-1 pb-2 pl-9 pr-4 pt-3">
+          {/* Header Bar */}
+          <View className="mb-3 flex-row items-center justify-between">
+            <Text className="font-serif text-base font-bold" style={{ color: COLORS.mascotTitle }}>
+              XP: 12345
+            </Text>
+            <IconButton name="mic" onPress={toggleMusic} />
+          </View>
 
-      {/* Main titles */}
-      <Text className="mb-2 text-2xl font-bold text-black">Select Games</Text>
-      <Text className="mb-3 text-base text-black">Choose your adventure</Text>
+          {/* Hand-drawn Select Game Header */}
+          <SelectGameHeader />
 
-      {/* Record component */}
-      <RecordComponent info={{ header: "Your Record", winStreak: 5, gamesPlayed: 27 }} />
+          {/* Record component */}
+          <RecordComponent
+            info={{
+              header: TEXT.PENCIL_RECORD,
+              winStreak: 5,
+              gamesPlayed: 42,
+              sheetLabel: TEXT.DEFAULT_SHEET,
+            }}
+          />
 
-      {/* Active games list */}
-      <FlatList
-        data={activeGames}
-        keyExtractor={(_, idx) => `active-${idx}`}
-        renderItem={({ item }) => <ActiveGameCard game={item} />}
-        className="mt-4"
-        ListHeaderComponent={
-          <Text className="mb-2 text-lg font-semibold text-black">Active Games</Text>
-        }
-      />
+          {/* Active games list */}
+          <FlatList
+            data={activeGames}
+            keyExtractor={(_, idx) => `active-${idx}`}
+            renderItem={({ item }) => <ActiveGameCard game={item} />}
+            className="mt-3"
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={
+              <Text
+                className="mb-2 font-serif text-lg font-bold"
+                style={{ color: COLORS.mascotTitle }}
+              >
+                {TEXT.ACTIVE_GAMES}
+              </Text>
+            }
+            ListFooterComponent={
+              <View className="mt-3">
+                <Text
+                  className="mb-2 font-serif text-lg font-bold"
+                  style={{ color: COLORS.mascotTitle }}
+                >
+                  {TEXT.UPCOMING_LOCKED_GAMES}
+                </Text>
+                {upcomingGames.map((g, i) => (
+                  <ComingSoonCard key={`coming-${i}`} {...g} />
+                ))}
+              </View>
+            }
+          />
 
-      {/* Upcoming / Locked games */}
-      <View className="mt-4">
-        <Text className="mb-2 text-lg font-semibold text-black">Upcoming & Locked Games</Text>
-        {upcomingGames.map((g, i) => (
-          <ComingSoonCard key={`coming-${i}`} {...g} />
-        ))}
-      </View>
-
-      {/* Footer */}
-      <Footer />
-    </View>
+          {/* Footer Navigation */}
+          <Footer />
+        </View>
+      </NotepadBackground>
+    </SafeAreaView>
   );
 };

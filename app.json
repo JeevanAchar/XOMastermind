@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "React-Native-Boiler-Plate-2026",
-    "slug": "react-native-boilerplate-2026",
+    "name": "XOMasterMind",
+    "slug": "xo-mastermind",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "reactnativeboilerplate2026",
+    "scheme": "xomastermind",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
@@ -17,7 +17,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.jeevan.xomastermind"
     },
     "web": {
       "output": "static",

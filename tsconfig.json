@@ -2,6 +2,7 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "jsx": "react-native",
     "types": ["jest"],
     "paths": {
       "@/*": ["./src/*"],
@@ -10,7 +11,8 @@
       "@hooks/*": ["./src/hooks/*"],
       "@constants/*": ["./src/constants/*"],
       "@types/*": ["./src/types/*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@c-types/*": ["./src/c-types/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]

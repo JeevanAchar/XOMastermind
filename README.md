@@ -1,6 +1,6 @@
-# React-Native-Boiler-Plate-2026 🚀
+# XO MasterMind 🎮
 
-A modern, production-ready **React Native** boilerplate built on **Expo SDK 57**, **React Native 0.86**, **React 19**, and **NativeWind v4 (Tailwind CSS)** with pre-configured TypeScript, Path Aliases, Jest unit & integration testing with coverage reporting, ESLint 9 Flat Config, and Prettier.
+A modern, production-ready **React Native** application built on **Expo SDK 57**, **React Native 0.86**, **React 19**, and **NativeWind v4 (Tailwind CSS)** with pre-configured TypeScript, Path Aliases, Jest unit & integration testing with coverage reporting, ESLint 9 Flat Config, and Prettier.
 
 ---
 

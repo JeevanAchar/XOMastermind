@@ -5,11 +5,10 @@ import { Alert } from "react-native";
 jest.spyOn(Alert, "alert").mockImplementation(() => {});
 
 describe("HomeScreen Integration Tests", () => {
-  it("renders header, boilerplate titles, and tech stack tags", () => {
+  it("renders header, app titles, and tech stack tags", () => {
     render(<HomeScreen />);
 
-    expect(screen.getByText("React Native 2026")).toBeTruthy();
-    expect(screen.getByText("React-Native-Boiler-Plate-2026")).toBeTruthy();
+    expect(screen.getAllByText("XO MasterMind").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("Expo SDK v57")).toBeTruthy();
     expect(screen.getByText("React Native 0.86")).toBeTruthy();
   });
@@ -32,7 +31,7 @@ describe("HomeScreen Integration Tests", () => {
     fireEvent.press(testButton);
 
     expect(Alert.alert).toHaveBeenCalledWith(
-      "Boilerplate Active",
+      "XO MasterMind",
       expect.stringContaining("Click count: 1"),
     );
   });

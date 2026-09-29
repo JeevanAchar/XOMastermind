@@ -178,3 +178,125 @@ Response: Redesigned `RecordComponent` at `src/components/RecordComponent.tsx` t
   2. Games Played card displaying total games count alongside a hand-drawn 5-tally pencil stroke doodle.
 - Extended `RecordInfo` in `src/c-types/RecordInfo.ts` and added constants `PENCIL_RECORD`, `WIN_STREAK`, `GAMES_PLAYED`, and `DEFAULT_SHEET` in `src/constants/texts.ts`.
 - Updated `SelectGamesScreen.tsx` to provide data matching the screenshot.
+
+=======================================
+
+Query: I am building xo game which is tic tac toe game with the paper theme UI
+
+The flow of the application
+
+User Opens the APP -> Spalsh Screen comes -> Loading Screen Saying that it is getting loaded -> game selection screen list of availble games for the user -> user selects the game -> user selects other required games functionality -> plays the game -> if required replays the games -> finishes the game
+
+Spalsh Screen UI elements
+Spalsh Screen Contains background of the notebook page (utilize the background component which is already created, NotepadBackground) 
+In the Centre if the Spalsh Screen there will be a grid with x and o (utilize the grid which is already created, check the XOLoadingBoard component for the grid , x and o UI) 
+
+
+Loading Screen UI elements (component is already present we need to make tweeks and update the UI according to the design)
+It has the header with border 
+	in the header left hand side we will have a user profile icon and user name right side of the profile icon 
+	in the header right hand side we will have a speaker button if they click on the speaker button the music will be mutued and the button changes to speaker with / stating that it is muted 
+
+Select Games Header
+Sub header which suites the game or something funny or explaination of the page in one line
+
+Record UI (component is already present)
+Pencil record (header)
+win streak(highest winning streaks) games played(total games played)
+
+Available Games list
+we will reuse the component to show the available games in the application (as of now supported games is xo)
+we need to create a seperate file where we will add the available where the UI and functionlaity is ready
+
+UI of the available game component 
+header has hot text if the game is marked as hot game
+Game header(game title) number of players can play
+Subheader of the game
+
+Image or UI of the game
+
+Playnow button
+
+Upcoming games UI
+here also we will crate a resuable component to show the list of upcoming games
+
+Upcoming games has the UI of 
+lock/game icon to the left soon/level(where the game will be unlocked) text to the right
+game name (example dots and boxes)
+sub header
+small image or generated UI of the game
+comming soon /locked box
+
+Footer(we will use already created footer component)
+
+
+Things to remember while working on the component or ui 
+
+1: The Should match with screenshots provided 
+2: Create a each every component where ever you think the components can be reused
+3: Follow The statandard sturuture in the whole application
+	Linting, Same Coding patterns , use type script and use one main icons package, use tailwindcss for the css
+4: When we are creating UI we have to keep in mind that we will be integrating it with actual data and functionality all the UI should have have funtinal and data scope
+
+& 'c:\Users\Jeevan Achar\Pictures\Screenshots\Screenshot 2026-09-28 220247.png' (loading screen screenshort)
+& 'c:\Users\Jeevan Achar\Pictures\Screenshots\Screenshot 2026-09-28 220257.png' (select game screenshort)
+
+Response: Built and updated all screens and components matching the screenshots and specifications:
+- **Design System Tokens & Texts**: Expanded `src/constants/theme.ts` with color tokens (`primaryNavy`, `accentRed`, `royalBlue`, `highlighterYellow`, `manilaTape`, `washiTape`, `tapeBorder`, `charcoalInk`, `cardMutedBg`, `badgeSoonBg`, `badgeLvlBg`, `borderRule`, etc.) and `src/constants/texts.ts` with all strings.
+- **NotepadBackground**: Added `showTopSpiralRings` (metallic wire loops and hole punches as in Screenshot 1) and `showBinderHoles` (left edge binder holes as in Screenshot 2), with 0.22 opacity blueprint grid lines.
+- **TopAppBar**: Built reusable header (`src/components/TopAppBar.tsx`) with hanging paperclip, profile avatar, "Room 4B" / "Doodler #18", "★ 1,240" star coin pill, and toggleable mute button (`Volume2` / `VolumeX`).
+- **Splash Screen**: Created `src/screens/SplashScreen.tsx` utilizing `NotepadBackground` with centered `XOLoadingBoard`.
+- **Loading Screen**: Refined `InitialLoadingScreen.tsx` to match Screenshot 1 with "Pencil Battle No. 01" tag, XO doodle mascot, striped progress bar with pencil tip and percentage, "Study Hall Secret" clipped note with tip body and desk mate tallies, and "Class in session" footer notice.
+- **Select Games Screen**: Updated `src/screens/SelectGamesScreen.tsx` matching Screenshot 2 with `TopAppBar`, `SelectGameHeader` with wavy red underline, `RecordComponent`, featured game card, upcoming games grid, and `Footer`.
+- **Featured Game Card**: Updated `ActiveGameCard.tsx` with washi tape strips, "HOT!" flame badge, player count tag, `MiniXOGridPreview` (charcoal grid, blue Xs, red Os, red winning slash), and "PLAY NOW" button with 3D shadow.
+- **Available Games List**: Created `src/constants/availableGames.tsx` defining the supported games.
+- **Upcoming Games Section**: Created `src/components/UpcomingGamesSection.tsx`, `ComingSoonCard.tsx`, and `src/constants/upcomingGames.tsx` featuring "Dots & Boxes" and "Hangman" with doodle previews, SOON/LVL badges, and status buttons.
+- **Footer Navigation**: Updated `src/components/Footer.tsx` with 4 tabs ("Play" with yellow highlight pill, "Pass & Play", "Trophies", "Notebook").
+- **App Navigation Flow**: Implemented full state machine in `src/app/index.tsx`: Splash -> Loading -> Game Hub -> Setup -> Gameplay.
+- **Types & Quality**: Created type definitions in `src/c-types/` (`TopAppBarProps`, `FooterProps`, `UpcomingGamesSectionProps`, `SplashScreenProps`, `InitialLoadingScreenProps`, `SelectGamesScreenProps`, `GameSetupScreenProps`, `PageNoteProps`). All TypeScript checks, Jest unit/integration tests, and ESLint passed with 0 errors and 0 warnings.
+
+=======================================
+
+Query: C:\Users\Jeevan Achar\Desktop\XOMastermind\src\constants\upcomingGames.ts
+C:\Users\Jeevan Achar\Desktop\XOMastermind\src\constants\availableGames.ts
+
+'MiniXOGridPreview' refers to a value, but is being used as a type here. Did you mean 'typeof MiniXOGridPreview'?
+
+The objects are not able to use the components
+
+Response: Resolved the issue with JSX usage in `.ts` files:
+- **Cause**: In standard `.ts` files, JSX syntax `<MiniXOGridPreview />` is interpreted by the TypeScript parser as a type assertion/type parameter rather than a JSX element, causing the `'MiniXOGridPreview' refers to a value, but is being used as a type here` error.
+- **Solution**:
+  1. Updated `ActiveGame` (`src/c-types/ActiveGame.ts`) and `ComingSoonCardProps` (`src/c-types/ComingSoonCard.ts`) to accept `previewComponent?: ComponentType` as a first-class React component type.
+  2. Maintained pure `.ts` files (`src/constants/availableGames.ts` and `src/constants/upcomingGames.ts`) by passing component references (`previewComponent: MiniXOGridPreview`, `previewComponent: DotsAndBoxesPreview`, `previewComponent: HangmanPreview`) without any JSX tags.
+  3. Updated `ActiveGameCard.tsx` and `ComingSoonCard.tsx` to render the `previewComponent` dynamically (`<PreviewComponent />`), retaining backward compatibility with `renderPreview` and `imageUri`.
+  4. Verified with `npx tsc --noEmit`, `npm run lint`, and `npm test`—all compile cleanly with 0 errors and 0 warnings.
+
+=======================================
+
+Query: Instead of using the switch case its better to use the global context or navigation given by the react native
+
+Response: Refactored navigation from a switch-case state machine in index.tsx to Expo Router's file-based navigation + React Context for shared game settings.
+
+Changes made:
+
+1. src/c-types/GameSettings.ts (NEW) – Defines the GameSettings interface (gridSize, opponent, marker).
+2. src/c-types/GameContextValue.ts (NEW) – Defines GameContextValue interface { settings, updateSettings }.
+3. src/context/GameContext.tsx (NEW) – GameProvider wraps the app; useGameContext hook exposes settings globally.
+4. src/app/_layout.tsx (UPDATED) – Wraps Stack navigator with <GameProvider> and adds fade animation.
+5. src/app/index.tsx (UPDATED) – Replaced switch-case HomeScreen with a simple <Redirect href="/splash" />.
+6. src/app/splash.tsx (NEW) – Route renders SplashScreen, calls router.replace("/loading") on complete.
+7. src/app/loading.tsx (NEW) – Route renders InitialLoadingScreen, calls router.replace("/select-game") on complete.
+8. src/app/select-game.tsx (NEW) – Route renders SelectGamesScreen, calls router.push("/game-setup") on selection.
+9. src/app/game-setup.tsx (NEW) – Route renders GameSetupScreen, saves settings to GameContext, calls router.push("/playing").
+10. src/app/playing.tsx (NEW) – Route renders PlayingGameScreen; router.replace("/select-game") on finish, router.replace("/playing") on replay.
+11. src/screens/PlayingGameScreen.tsx (UPDATED) – Consumes useGameContext() to read game settings from global context.
+12. tsconfig.json (UPDATED) – Added "@context/*" path alias pointing to src/context/*.
+
+=======================================
+
+Query: Type '"/splash"' is not assignable to type 'RelativePathString | ExternalPathString | ...' — Expo Router typed routes error
+
+Response: The .expo/types/router.d.ts was stale — it was generated before the new route files (splash, loading, select-game, game-setup, playing) were added, so TypeScript didn't recognise those paths.
+
+Fix: Manually updated .expo/types/router.d.ts to declare all new routes in hrefInputParams, hrefOutputParams and href union types. This file is auto-regenerated by expo-router on the next `expo start`, so the fix will persist permanently once the dev server runs.

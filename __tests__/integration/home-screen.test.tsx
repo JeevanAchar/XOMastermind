@@ -1,38 +1,37 @@
 import HomeScreen from "@/app/index";
-import { fireEvent, render, screen } from "@testing-library/react-native";
-import { Alert } from "react-native";
+import { SelectGamesScreen } from "@/screens/SelectGamesScreen";
+import { SplashScreen } from "@/screens/SplashScreen";
+import { render, screen } from "@testing-library/react-native";
+import React from "react";
 
-jest.spyOn(Alert, "alert").mockImplementation(() => {});
+describe("Doodle XO Screens Integration Tests", () => {
+  it("renders SplashScreen with Doodle XO header", () => {
+    render(<SplashScreen />);
 
-describe("HomeScreen Integration Tests", () => {
-  it("renders header, app titles, and tech stack tags", () => {
-    render(<HomeScreen />);
-
-    expect(screen.getAllByText("XO MasterMind").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText("Expo SDK v57")).toBeTruthy();
-    expect(screen.getByText("React Native 0.86")).toBeTruthy();
+    expect(screen.getByText("DOODLE XO")).toBeTruthy();
+    expect(screen.getByText("the graph paper showdown")).toBeTruthy();
   });
 
-  it("renders path aliases and useful scripts sections", () => {
-    render(<HomeScreen />);
+  it("renders SelectGamesScreen with Select Game header, Record, and Featured Game", () => {
+    render(<SelectGamesScreen />);
 
-    expect(screen.getByText("Configured Path Aliases")).toBeTruthy();
-    expect(screen.getByText("@components/*")).toBeTruthy();
-    expect(screen.getByText("@utils/*")).toBeTruthy();
-    expect(screen.getByText("Useful Scripts")).toBeTruthy();
+    expect(screen.getByText("Select Game")).toBeTruthy();
+    expect(screen.getByText("Pick a scrap paper to start doodling!")).toBeTruthy();
+    expect(screen.getByText("PENCIL RECORD")).toBeTruthy();
+    expect(screen.getByText("XO Tic-Tac-Toe")).toBeTruthy();
+    expect(screen.getByText("PLAY NOW")).toBeTruthy();
   });
 
-  it("increments interaction counter and triggers alert on button press", () => {
+  it("renders Upcoming games in SelectGamesScreen", () => {
+    render(<SelectGamesScreen />);
+
+    expect(screen.getByText("Dots & Boxes")).toBeTruthy();
+    expect(screen.getByText("Hangman")).toBeTruthy();
+  });
+
+  it("renders HomeScreen initial state", () => {
     render(<HomeScreen />);
 
-    const testButton = screen.getByText(/Test Interaction/i);
-    expect(testButton).toBeTruthy();
-
-    fireEvent.press(testButton);
-
-    expect(Alert.alert).toHaveBeenCalledWith(
-      "XO MasterMind",
-      expect.stringContaining("Click count: 1"),
-    );
+    expect(screen.getByText("DOODLE XO")).toBeTruthy();
   });
 });

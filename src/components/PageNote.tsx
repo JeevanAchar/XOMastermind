@@ -1,35 +1,20 @@
+import type { PageNoteProps } from "@c-types/PageNoteProps";
+import { COLORS } from "@constants/theme";
 import { Paperclip } from "lucide-react-native";
-import React, { ReactNode, useEffect, useState } from "react";
-import { Animated, DimensionValue, Easing, Text, View } from "react-native";
-
-interface PageNoteProps {
-  /** Small title at the top */
-  header: string;
-  /** Main note text */
-  subheader: string;
-  /** Optional icon before the header */
-  headerIcon?: ReactNode;
-  /** Optional content below the subheader */
-  children?: ReactNode;
-  /** Paper background color */
-  paperColor?: string;
-  /** Note width */
-  width?: DimensionValue;
-  /** Note rotation */
-  rotation?: string;
-  /** Enable subtle paper wobble */
-  wobble?: boolean;
-}
+import React, { useEffect, useState } from "react";
+import { Animated, Easing, Text, View } from "react-native";
 
 export const PageNote: React.FC<PageNoteProps> = ({
   header,
   subheader,
   headerIcon,
   children,
-  paperColor = "#FFFDF7",
+  paperColor = COLORS.white,
   width = "100%",
-  rotation = "-3deg",
+  rotation = "-2.5deg",
   wobble = true,
+  footerLeft,
+  footerRight,
 }) => {
   const [wobbleAnimation] = useState(() => new Animated.Value(0));
 
@@ -140,18 +125,50 @@ export const PageNote: React.FC<PageNoteProps> = ({
         {/* ─────────────────────────────
             Content
         ───────────────────────────── */}
-        <View className="z-10 px-6 pb-[22px] pt-7">
+        {/* ─────────────────────────────
+            Content
+        ───────────────────────────── */}
+        <View className="z-10 px-5 pb-3.5 pt-5">
           {/* Header */}
-          <View className="mb-2 flex-row items-center">
-            {headerIcon && <View className="mr-2">{headerIcon}</View>}
-            <Text className="font-serif text-[17px] font-semibold text-[#123B68]">{header}</Text>
+          <View className="mb-1.5 flex-row items-center">
+            {headerIcon && <View className="mr-1.5">{headerIcon}</View>}
+            <Text className="font-serif text-sm font-bold" style={{ color: COLORS.primaryNavy }}>
+              {header}
+            </Text>
           </View>
 
           {/* Main note */}
-          <Text className="font-serif text-[24px] leading-[34px] text-[#292929]">{subheader}</Text>
+          <Text className="font-serif text-xs leading-5" style={{ color: COLORS.charcoalInk }}>
+            {subheader}
+          </Text>
 
           {/* Optional content */}
-          {children && <View className="mt-3.5">{children}</View>}
+          {children && <View className="mt-2">{children}</View>}
+
+          {/* Footer row (e.g. Desk Mate Match #14 and |||| 5 wins) */}
+          {(footerLeft || footerRight) && (
+            <View
+              className="mt-3 flex-row items-center justify-between border-t pt-2"
+              style={{ borderColor: COLORS.borderRule }}
+            >
+              {footerLeft && (
+                <Text
+                  className="font-serif text-[11px] font-medium"
+                  style={{ color: COLORS.graphiteGray }}
+                >
+                  {footerLeft}
+                </Text>
+              )}
+              {footerRight && (
+                <Text
+                  className="font-serif text-[11px] font-bold"
+                  style={{ color: COLORS.royalBlue }}
+                >
+                  {footerRight}
+                </Text>
+              )}
+            </View>
+          )}
         </View>
       </View>
     </Animated.View>

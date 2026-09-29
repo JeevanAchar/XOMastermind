@@ -12,7 +12,8 @@
       "@constants/*": ["./src/constants/*"],
       "@types/*": ["./src/types/*"],
       "@assets/*": ["./assets/*"],
-      "@c-types/*": ["./src/c-types/*"]
+      "@c-types/*": ["./src/c-types/*"],
+      "@context/*": ["./src/context/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]

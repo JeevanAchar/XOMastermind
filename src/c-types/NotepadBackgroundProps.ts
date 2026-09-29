@@ -12,4 +12,8 @@ export interface NotepadBackgroundProps {
   showHeaderPins?: boolean;
   /** Whether to render red left margin line (defaults to true) */
   showMarginLine?: boolean;
+  /** Whether to render left edge binder punch holes (for notebook pages) */
+  showBinderHoles?: boolean;
+  /** Whether to render top spiral wire rings (as in splash / loader) */
+  showTopSpiralRings?: boolean;
 }

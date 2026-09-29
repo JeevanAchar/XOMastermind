@@ -1,69 +1,99 @@
-import { BookOpen, Play, Trophy } from "lucide-react-native";
+import type { FooterProps, FooterTabKey } from "@c-types/FooterProps";
+import { COLORS } from "@constants/theme";
+import { BookOpen, Hash, Trophy } from "lucide-react-native";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-// Footer button definition interface
-interface FooterButtonData {
-  key: string;
+interface FooterButtonConfig {
+  key: FooterTabKey;
   label: string;
-  iconName: "play" | "trophy" | "notebook";
+  renderIcon: (color: string) => React.ReactNode;
 }
 
-// Reusable FooterButton component
-interface FooterButtonProps {
-  iconName: "play" | "trophy" | "notebook";
-  label: string;
-  isActive: boolean;
-  onPress: () => void;
-}
+/**
+ * Footer renders the doodle bottom navigation bar matching Screenshot 2:
+ * - White background with subtle top rule (#e2e8f0)
+ * - 4 Navigation tabs:
+ *   1. Play (# icon with active yellow highlighter pill & navy ink)
+ *   2. Pass & Play (Users icon)
+ *   3. Trophies (Trophy icon)
+ *   4. Notebook (BookOpen icon)
+ */
+export const Footer: React.FC<FooterProps> = ({
+  activeTab: controlledActiveTab,
+  onTabChange,
+  className = "",
+}) => {
+  const [internalTab, setInternalTab] = useState<FooterTabKey>("play");
+  const currentTab = controlledActiveTab ?? internalTab;
 
-const FooterButton: React.FC<FooterButtonProps> = ({ iconName, label, isActive, onPress }) => {
-  const iconColor = isActive ? "#000000" : "#6b7280";
-  const textColor = isActive ? "#000000" : "#6b7280";
-
-  const IconComponent = (() => {
-    switch (iconName) {
-      case "play":
-        return <Play size={20} color={iconColor} />;
-      case "trophy":
-        return <Trophy size={20} color={iconColor} />;
-      case "notebook":
-        return <BookOpen size={20} color={iconColor} />;
+  const handleSelectTab = (tab: FooterTabKey) => {
+    setInternalTab(tab);
+    if (onTabChange) {
+      onTabChange(tab);
     }
-  })();
+  };
 
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      className={`max-w-[80px] flex-1 items-center rounded-md border py-2 ${isActive ? "border-gray-700 bg-[#fef08a]" : "border-transparent"}`}
-    >
-      {IconComponent}
-      <Text className={`mt-1 text-xs ${textColor}`}>{label}</Text>
-    </TouchableOpacity>
-  );
-};
-
-export const Footer: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>("play");
-
-  const footerItems: FooterButtonData[] = [
-    { key: "play", label: "Play", iconName: "play" },
-    { key: "trophy", label: "Trophies", iconName: "trophy" },
-    { key: "notebook", label: "Notebook", iconName: "notebook" },
+  const tabs: FooterButtonConfig[] = [
+    {
+      key: "play",
+      label: "Play",
+      renderIcon: (color) => <Hash size={18} color={color} strokeWidth={2.4} />,
+    },
+    {
+      key: "trophies",
+      label: "Trophies",
+      renderIcon: (color) => <Trophy size={18} color={color} strokeWidth={2} />,
+    },
+    {
+      key: "notebook",
+      label: "Notebook",
+      renderIcon: (color) => <BookOpen size={18} color={color} strokeWidth={2} />,
+    },
   ];
 
   return (
-    <View className="border-t border-t-gray-700 text-gray-500">
-      <View className="w-full flex-row items-center justify-around py-2">
-        {footerItems.map((item) => (
-          <FooterButton
-            key={item.key}
-            iconName={item.iconName as any}
-            label={item.label}
-            isActive={activeTab === item.key}
-            onPress={() => setActiveTab(item.key)}
-          />
-        ))}
+    <View
+      className={`w-full border-t px-2 py-1.5 shadow-sm ${className}`}
+      style={{
+        backgroundColor: COLORS.white,
+        borderColor: COLORS.borderRule,
+      }}
+    >
+      <View className="flex-row items-center justify-around">
+        {tabs.map((tab) => {
+          const isActive = currentTab === tab.key;
+          const activeColor = COLORS.primaryNavy;
+          const inactiveColor = COLORS.graphiteGray;
+          const iconColor = isActive ? activeColor : inactiveColor;
+          const textColor = isActive ? activeColor : inactiveColor;
+
+          return (
+            <TouchableOpacity
+              key={tab.key}
+              onPress={() => handleSelectTab(tab.key)}
+              activeOpacity={0.8}
+              className={`items-center justify-center rounded-md px-3 py-1.5 ${
+                isActive ? "shadow-xs border" : "border-transparent"
+              }`}
+              style={{
+                backgroundColor: isActive ? COLORS.manilaTape : "transparent",
+                borderColor: isActive ? COLORS.tapeBorder : "transparent",
+              }}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: isActive }}
+              accessibilityLabel={tab.label}
+            >
+              {tab.renderIcon(iconColor)}
+              <Text
+                className="mt-0.5 font-serif text-[11px] font-bold"
+                style={{ color: textColor }}
+              >
+                {tab.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </View>
   );

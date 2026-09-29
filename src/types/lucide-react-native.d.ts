@@ -26,4 +26,17 @@ declare module "lucide-react-native" {
   export const Flame: React.ComponentType<LucideProps>;
   export const ArrowLeft: React.ComponentType<LucideProps>;
   export const Mic: React.ComponentType<LucideProps>;
+  export const Volume2: React.ComponentType<LucideProps>;
+  export const VolumeX: React.ComponentType<LucideProps>;
+  export const Star: React.ComponentType<LucideProps>;
+  export const Smile: React.ComponentType<LucideProps>;
+  export const User: React.ComponentType<LucideProps>;
+  export const CheckCircle2: React.ComponentType<LucideProps>;
+  export const Check: React.ComponentType<LucideProps>;
+  export const LayoutGrid: React.ComponentType<LucideProps>;
+  export const Hash: React.ComponentType<LucideProps>;
+  export const Users: React.ComponentType<LucideProps>;
+  export const BellOff: React.ComponentType<LucideProps>;
+  export const Bot: React.ComponentType<LucideProps>;
+  export const RotateCcw: React.ComponentType<LucideProps>;
 }
